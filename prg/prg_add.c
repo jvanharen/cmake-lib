@@ -43,14 +43,24 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
 static struct argp argp = {options, parse_opt, args_doc, doc};
 
 int main(int argc, char **argv) {
+  char *version, *branch, *commit;
   int res;
   struct arguments arguments;
 
   arguments.a = 0;
   arguments.b = 0;
+
+  version = add_get_version();
+  branch = add_get_branch();
+  commit = add_get_commit();
+  printf("Add library version %s (Git branch %s %s)\n", version, branch,
+         commit);
+  free(version);
+
   argp_parse(&argp, argc, argv, 0, 0, &arguments);
+
   res = add_integer(arguments.a, arguments.b);
-  printf("%d\n", res);
+  printf("a + b = %d\n", res);
 
   return 0;
 }

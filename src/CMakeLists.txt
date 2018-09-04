@@ -4,6 +4,27 @@ set(LIB_SRC
 )
 
 
+### Get the current working branch. ###
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+### Get the latest abbreviated commit hash of the working branch. ###
+execute_process(
+  COMMAND git log -1 --format=%h
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+### Version configuration. ###
+configure_file(${CMAKE_SOURCE_DIR}/src/version.h.in
+  ${PROJECT_BINARY_DIR}/version.h
+)
+
 #### Add source to the library. ####
 add_library(${PROJECT_NAME} ${LIB_SRC})
 
@@ -14,6 +35,7 @@ target_include_directories(${PROJECT_NAME}
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
   PRIVATE
     ${CMAKE_SOURCE_DIR}/src
+    ${PROJECT_BINARY_DIR}
 )
 
 ### Add compile options to the target of the library. ###
