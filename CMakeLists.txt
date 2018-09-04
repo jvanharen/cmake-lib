@@ -16,6 +16,8 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/prg)
   add_subdirectory(prg)
 endif(EXISTS ${CMAKE_SOURCE_DIR}/prg)
 if(EXISTS ${CMAKE_SOURCE_DIR}/test)
+  ### Set Valgrind with leak-check=full. ###
+  set(MEMORYCHECK_COMMAND_OPTIONS "--leak-check=full -v")
   enable_testing()
   include(CTest)
   add_subdirectory(test)

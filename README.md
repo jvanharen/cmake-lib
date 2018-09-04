@@ -14,3 +14,8 @@ tests/
 Optional files
 LICENSE
 README.md
+
+
+
+make test
+ctest -D ExperimentalMemCheck
