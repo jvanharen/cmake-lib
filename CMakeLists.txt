@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 3.5)
+### Change the project name and the version. ###
+project(add VERSION 1.0.0 LANGUAGES C)
+
+
+### Add Cmake module to CMAKE_MODULE_PATH. ###
+if(NOT CMAKE_MODULE_PATH)
+  set(CMAKE_MODULE_PATH)
+endif(NOT CMAKE_MODULE_PATH)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+include(GNUInstallDirs)
+
+### Add directories to the project. ###
+add_subdirectory(src)
+if(EXISTS ${CMAKE_SOURCE_DIR}/prg)
+  add_subdirectory(prg)
+endif(EXISTS ${CMAKE_SOURCE_DIR}/prg)
+if(EXISTS ${CMAKE_SOURCE_DIR}/doc)
+  add_subdirectory(doc)
+endif(EXISTS ${CMAKE_SOURCE_DIR}/doc)
+
+### Create a TGZ package of the library. ###
+set(CPACK_GENERATOR TGZ)
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+set(CPACK_VERBATIM_VARIABLES    YES)
+if(EXISTS ${CMAKE_SOURCE_DIR}/LICENSE)
+  set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
+endif(EXISTS ${CMAKE_SOURCE_DIR}/LICENSE)
+if(EXISTS ${CMAKE_SOURCE_DIR}/README.md)
+  set(CPACK_RESOURCE_FILE_README  ${CMAKE_SOURCE_DIR}/README.md)
+endif(EXISTS ${CMAKE_SOURCE_DIR}/README.md)
+include(CPack)
