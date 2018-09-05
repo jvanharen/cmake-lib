@@ -1,4 +1,4 @@
-### Add the source of your library. ###
+### Add the source/headers of your library. ###
 set(LIB_SRC
   add.c
 )

@@ -1,0 +1,15 @@
+﻿---
+BasedOnStyle: Google
+AlignAfterOpenBracket: DontAlign
+AlignConsecutiveAssignments: 'true'
+AlignConsecutiveDeclarations: 'true'
+AlignOperands: 'true'
+AlignTrailingComments: 'true'
+AllowShortBlocksOnASingleLine: 'true'
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: 'true'
+AllowShortLoopsOnASingleLine: 'true'
+Language: Cpp
+SpacesInSquareBrackets: 'true'
+
+...

@@ -7,7 +7,9 @@ project(add VERSION 1.0.0 LANGUAGES C)
 if(NOT CMAKE_MODULE_PATH)
   set(CMAKE_MODULE_PATH)
 endif(NOT CMAKE_MODULE_PATH)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+if(EXISTS ${CMAKE_SOURCE_DIR}/cmake)
+  list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+endif(EXISTS ${CMAKE_SOURCE_DIR}/cmake)
 include(GNUInstallDirs)
 
 ### Add directories to the project. ###
@@ -40,3 +42,38 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/README.md)
   set(CPACK_RESOURCE_FILE_README  ${CMAKE_SOURCE_DIR}/README.md)
 endif(EXISTS ${CMAKE_SOURCE_DIR}/README.md)
 include(CPack)
+
+### Indentation with clang-format. ###
+option(CLANGFORMAT OFF)
+set(EXCLUDE_DIR
+  ${CMAKE_SOURCE_DIR}/cmake
+  ${CMAKE_SOURCE_DIR}/doc
+  ${CMAKE_SOURCE_DIR}/test/unity
+  ${CMAKE_BINARY_DIR}
+)
+if(CLANGFORMAT)
+  find_package(ClangFormat)
+  if(ClangFormat_FOUND)
+    file(GLOB_RECURSE ALL_SRC *.c *.h *.h.in)
+    foreach(ISRC ${ALL_SRC})
+      foreach(IDIR ${EXCLUDE_DIR})
+        string(FIND ${ISRC} ${IDIR} EXCLUDE_DIR_FOUND)
+        if(NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
+          list(REMOVE_ITEM ALL_SRC ${ISRC})
+        endif(NOT ${EXCLUDE_DIR_FOUND} EQUAL -1)
+      endforeach(IDIR ${EXCLUDE_DIR})
+    endforeach(ISRC ${ALL_SRC})
+
+    foreach(ISRC ${ALL_SRC})
+      message(STATUS ${ISRC})
+    endforeach(ISRC ${ALL_SRC})
+
+    add_custom_target(
+      clangformat
+      COMMAND ${CLANG_FORMAT_EXECUTABLE} -style=file -i ${ALL_SRC}
+      COMMENT "Indenting all source files"
+    )
+  else(ClangFormat_FOUND)
+    message(STATUS "Clang-format need to be installed to indent source files")
+  endif(ClangFormat_FOUND)
+endif(CLANGFORMAT)

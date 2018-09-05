@@ -1,6 +1,6 @@
 /**
- *   @file prg_add.c
- *   @brief This source contains the adding program.
+ *   @file prg_sub.c
+ *   @brief This source contains the substracting program.
  *
  *   @author Julien Vanharen
  *   @date 04/09/2018
@@ -13,11 +13,11 @@
 
 const char *argp_program_version     = "1.0";
 const char *argp_program_bug_address = "<julien.vanharen@inria.fr>";
-static char doc[]                    = "ADD -- Add program.";
+static char doc[]                    = "SUB -- Sub program.";
 static char args_doc[]               = "";
 static struct argp_option options[]  = {
-    {"integer_a", 'a', "a", 0, "First integer to add", 0},
-    {"integer_b", 'b', "b", 0, "Second integer to add", 0}};
+    {"integer_a", 'a', "a", 0, "First integer", 0},
+    {"integer_b", 'b', "b", 0, "Second integer to substract", 0}};
 
 struct arguments {
   int a;
@@ -58,8 +58,8 @@ int main(int argc, char **argv) {
 
   argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
-  res = add_integer(arguments.a, arguments.b);
-  printf("a + b = %d\n", res);
+  res = add_integer(arguments.a, -arguments.b);
+  printf("a - b = %d\n", res);
 
   return 0;
 }
