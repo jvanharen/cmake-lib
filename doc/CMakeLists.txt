@@ -20,7 +20,7 @@ if(BUILD_DOC)
     set(SPHINX_HTML_DIR         "${CMAKE_CURRENT_BINARY_DIR}/html")
     configure_file("${CMAKE_SOURCE_DIR}/doc/conf.py.in"
       "${SPHINX_BINARY_BUILD_DIR}/conf.py" @ONLY)
-    add_custom_target(doc
+    add_custom_target(doc ALL
       ${SPHINX_EXECUTABLE}
       -q -b html
       -c "${SPHINX_BINARY_BUILD_DIR}"

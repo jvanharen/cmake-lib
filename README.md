@@ -26,12 +26,13 @@ This example shows how to build a library with modern [CMake](https://cmake.org)
 
 ```bash
 git clone https://github.com/jvanharen/cmake-lib
+cd cmake-lib
+git submodule update --init --recursive
 ```
 
 ### CMake configuration:
 
 ```bash
-cd cmake-lib
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX=/path/to/install -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_DOC=ON -DCLANGFORMAT=ON ..
