@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jvanharen/cmake-lib.svg?branch=master)](https://travis-ci.org/jvanharen/cmake-lib)
+
 # Modern [CMake](https://cmake.org) example for a C library
 
 # Overview
